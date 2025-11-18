@@ -24,9 +24,7 @@ FOR EACH ROW
 DECLARE
     v_user VARCHAR2(20);
 BEGIN
-    -- Get current user name
     SELECT USER INTO v_user FROM dual;
-
     DBMS_OUTPUT.PUT_LINE('You inserted a row, ' || v_user);
 END;
 /
