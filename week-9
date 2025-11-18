@@ -1,0 +1,23 @@
+Write a PL/SQL program that uses cursor operation on any data base
+
+SET SERVEROUTPUT ON;
+
+DECLARE
+    v_sname  VARCHAR2(20);
+    v_sid    NUMBER;
+
+    CURSOR d1 IS
+        SELECT sname, sid FROM Sailors;
+BEGIN
+    OPEN d1;
+
+    LOOP
+        FETCH d1 INTO v_sname, v_sid;
+        EXIT WHEN d1%NOTFOUND;
+
+        DBMS_OUTPUT.PUT_LINE(v_sname || '   ' || v_sid);
+    END LOOP;
+
+    CLOSE d1;
+END;
+/
