@@ -18,24 +18,18 @@ INSERT INTO Sailors VALUES (95, 'Bob', 3, 63.5);
 ____________________________________________
 Write a PL/SQL program that uses cursor operation on any data base
 
-SET SERVEROUTPUT ON;
-
-DECLARE
-    v_sname  VARCHAR2(20);
-    v_sid    NUMBER;
-
-    CURSOR d1 IS
-        SELECT sname, sid FROM Sailors;
-BEGIN
-    OPEN d1;
-
-    LOOP
-        FETCH d1 INTO v_sname, v_sid;
-        EXIT WHEN d1%NOTFOUND;
-
-        DBMS_OUTPUT.PUT_LINE(v_sname || '   ' || v_sid);
-    END LOOP;
-
-    CLOSE d1;
-END;
-/
+set Serveroutput on;
+SQL> declare
+  2  vsname char(10);
+  3  vsid number(10);
+  4  cursor d is
+  5  select sname,sid from sailors1;
+  6  begin open d;
+  7  loop
+  8  fetch d into vsname,vsid;
+  9  exit when d%notfound;
+ 10  dbms_output.put_line(vsname||' '||vsid);
+ 11  end loop;
+ 12  close d;
+ 13  end;
+ 14  /
