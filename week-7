@@ -1,0 +1,46 @@
+1) Write a PL/SQL code for creating of Trigger to INSERT data into a table
+
+CREATE OR REPLACE TRIGGER T1
+BEFORE INSERT ON emp
+FOR EACH ROW
+DECLARE
+    v_user VARCHAR2(20);
+BEGIN
+    -- Get current user name
+    SELECT USER INTO v_user FROM dual;
+
+    DBMS_OUTPUT.PUT_LINE('You inserted a row, ' || v_user);
+END;
+/
+
+__________________________________________
+2) Write a PL/SQL code for creating of Trigger to UPDATE data into a table
+
+CREATE OR REPLACE TRIGGER T2
+BEFORE UPDATE OF sid ON Sailors
+FOR EACH ROW
+BEGIN
+    IF :NEW.sid < 80 THEN
+        RAISE_APPLICATION_ERROR(-20001, 'Cannot update sid');
+    END IF;
+END;
+/
+
+-------------
+UPDATE Sailors SET sid = 54 WHERE rating = 10;
+
+__________________________________________
+3) Write a PL/SQL code for creating of Trigger to DELETE data into a table
+
+CREATE OR REPLACE TRIGGER T3
+AFTER DELETE ON Sailors
+FOR EACH ROW
+BEGIN
+    IF :OLD.sid = 22 THEN
+        RAISE_APPLICATION_ERROR(-20002, 'You cannot delete this row');
+    END IF;
+END;
+/
+
+-------------
+DELETE FROM Sailors WHERE sid = 22;
