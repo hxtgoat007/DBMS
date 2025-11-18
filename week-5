@@ -1,0 +1,28 @@
+1) Find the names of sailors who have reserved a red boat (Nested Subquery)
+
+SELECT sname FROM Sailors WHERE sid IN (SELECT sid FROM Reserves WHERE bid IN (SELECT bid FROM Boats WHERE color = 'red'));
+
+
+2) Find sailors who have reserved boat number 103 (Correlated Nested Query)
+
+SELECT sname FROM Sailors s WHERE EXISTS (SELECT * FROM Reserves r WHERE r.bid = 103 AND r.sid = s.sid);
+
+
+3) INNER JOIN
+
+SELECT c.id, c.name, o.amount, o.date1 FROM customer_table c INNER JOIN order_table o ON c.id = o.customer_id;
+
+
+4) LEFT OUTER JOIN
+
+SELECT c.id, c.name, o.amount, o.date1 FROM customer_table c LEFT JOIN order_table o ON c.id = o.customer_id;
+
+
+5) RIGHT OUTER JOIN
+
+SELECT c.id, c.name, o.amount, o.date1 FROM customer_table c RIGHT JOIN order_table o ON c.id = o.customer_id;
+
+
+6) EQUI JOIN
+
+SELECT c.id, c.name, o.amount, o.date1 FROM customer_table c, order_table o WHERE c.id = o.customer_id;
