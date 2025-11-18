@@ -1,0 +1,59 @@
+CREATE TABLE Sailors (
+    sid NUMBER,
+    sname VARCHAR2(20),
+    rating NUMBER,
+    age FLOAT
+);
+
+INSERT INTO Sailors VALUES (22, 'Dustin', 7, 45.0);
+INSERT INTO Sailors VALUES (29, 'Brutus', 1, 33.0);
+INSERT INTO Sailors VALUES (31, 'Lubber', 8, 55.5);
+INSERT INTO Sailors VALUES (32, 'Andy', 8, 25.5);
+INSERT INTO Sailors VALUES (58, 'Rusty', 10, 35.0);
+INSERT INTO Sailors VALUES (64, 'Horatio', 7, 35.0);
+INSERT INTO Sailors VALUES (71, 'Zorba', 10, 16.0);
+INSERT INTO Sailors VALUES (85, 'Art', 3, 25.5);
+INSERT INTO Sailors VALUES (95, 'Bob', 3, 63.5);
+
+_________________________________________
+1) Write a PL/SQL code for CREATION of procedure to view some specified colums from a table
+
+SET SERVEROUTPUT ON;
+
+CREATE OR REPLACE PROCEDURE S2(sid IN NUMBER)
+AS
+    v_sname VARCHAR2(15);
+    v_age   FLOAT;
+BEGIN
+    SELECT sname, age INTO v_sname, v_age
+    FROM Sailors
+    WHERE sid = sid;
+
+    DBMS_OUTPUT.PUT_LINE('SName : ' || v_sname);
+    DBMS_OUTPUT.PUT_LINE('Age   : ' || v_age);
+END;
+/
+
+------------
+EXECUTE S2(58);
+
+_______________________________________
+2) Write a PL/SQL code for MODIFICATION of procedure to view some specified colums from a table
+
+CREATE OR REPLACE PROCEDURE S3(
+    v_sid   IN Sailors.sid%TYPE,
+    v_sname IN Sailors.sname%TYPE,
+    v_age   IN Sailors.age%TYPE)
+AS
+BEGIN
+    UPDATE Sailors
+    SET sname = v_sname,
+        age   = v_age
+    WHERE sid = v_sid;
+
+    COMMIT;
+END;
+/
+
+------------
+EXECUTE S3(22, 'Dustin', 45);
