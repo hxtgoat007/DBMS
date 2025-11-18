@@ -15,7 +15,42 @@ INSERT INTO Sailors VALUES (71, 'Zorba', 10, 16.0);
 INSERT INTO Sailors VALUES (85, 'Art', 3, 25.5);
 INSERT INTO Sailors VALUES (95, 'Bob', 3, 63.5);
 
-______________________________________________
+-----------------------
+CREATE TABLE Boats (
+    bid NUMBER PRIMARY KEY,
+    bname VARCHAR2(20),
+    color VARCHAR2(10)
+);
+
+INSERT INTO Boats VALUES (101, 'Interlake', 'Blue');
+INSERT INTO Boats VALUES (102, 'Interlake', 'Red');
+INSERT INTO Boats VALUES (103, 'Clipper', 'Green');
+INSERT INTO Boats VALUES (104, 'Marine', 'Red');
+
+-----------------------
+CREATE TABLE Reserves (
+    sid NUMBER,
+    bid NUMBER,
+    day DATE,
+    FOREIGN KEY (sid) REFERENCES Sailors(sid),
+    FOREIGN KEY (bid) REFERENCES Boats(bid)
+);
+
+INSERT INTO Reserves VALUES (22, 101, '10-10-1998');
+INSERT INTO Reserves VALUES (22, 102, '10-10-1998');
+INSERT INTO Reserves VALUES (22, 103, '10-08-1998');
+INSERT INTO Reserves VALUES (22, 104, '10-07-1998');
+
+INSERT INTO Reserves VALUES (31, 102, '11-10-1998');
+INSERT INTO Reserves VALUES (31, 103, '11-06-1998');
+INSERT INTO Reserves VALUES (31, 104, '11-12-1998');
+
+INSERT INTO Reserves VALUES (64, 101, '09-05-1998');
+INSERT INTO Reserves VALUES (64, 102, '09-08-1998');
+
+INSERT INTO Reserves VALUES (74, 103, '09-08-1998');
+
+____________________________________________
 1) Find the average age of sailors with a rating of 10
 
 SELECT AVG(age) AS average_age FROM Sailors WHERE rating = 10;
