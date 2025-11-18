@@ -1,82 +1,36 @@
 1) Find sailors whose rating is better than some sailor called Horatio. (ANY)
 
-SELECT s.sid, s.sname
-FROM Sailors s
-WHERE s.rating > ANY(
-      SELECT rating FROM Sailors WHERE sname = 'Horatio');
+SELECT s.sid, s.sname FROM Sailors s WHERE s.rating > ANY(SELECT rating FROM Sailors WHERE sname = 'Horatio');
 
 _____________________________________________________
 2) Find the sailors with the highest rating. (ALL)
-SELECT sid, sname
-FROM Sailors
-WHERE rating >= ALL(SELECT rating FROM Sailors);
+SELECT sid, sname FROM Sailors WHERE rating >= ALL(SELECT rating FROM Sailors);
 
 _____________________________________________________
 3) Find sailors who have reserved both a red and a green boat. (IN)
-SELECT sname
-FROM Sailors
-WHERE sid IN(
-      SELECT r1.sid
-      FROM Reserves r1, Boats b1
-      WHERE r1.bid = b1.bid AND b1.color = 'red'
-      INTERSECT
-      SELECT r2.sid
-      FROM Reserves r2, Boats b2
-      WHERE r2.bid = b2.bid AND b2.color = 'green'
-);
+SELECT sname FROM Sailors WHERE sid IN(SELECT r1.sid FROM Reserves r1, Boats b1 WHERE r1.bid = b1.bid AND b1.color = 'red' INTERSECT SELECT r2.sid FROM Reserves r2, Boats b2 WHERE r2.bid = b2.bid AND b2.color = 'green');
 
 _____________________________________________________
 4) Find names of sailors who have reserved boat 103. (EXISTS)
 
-SELECT s.sname
-FROM Sailors s
-WHERE EXISTS(
-      SELECT 1 FROM Reserves r
-      WHERE r.bid = 103 AND r.sid = s.sid);
+SELECT s.sname FROM Sailors s WHERE EXISTS(SELECT 1 FROM Reserves r WHERE r.bid = 103 AND r.sid = s.sid);
 
 _____________________________________________________
 5) Find sailors who have reserved ALL boats. (NOT EXISTS)
 
-SELECT s.sname
-FROM Sailors s
-WHERE NOT EXISTS(
-      SELECT b.bid
-      FROM Boats b
-      WHERE NOT EXISTS(
-            SELECT 1 FROM Reserves r
-            WHERE r.sid = s.sid AND r.bid = b.bid
-      )
-);
+SELECT s.sname FROM Sailors s WHERE NOT EXISTS(SELECT b.bid FROM Boats b WHERE NOT EXISTS(SELECT 1 FROM Reserves r WHERE r.sid = s.sid AND r.bid = b.bid));
 
 _____________________________________________________
 6) Find sailors who reserved a red or green boat. (UNION)
 
-SELECT s.sname
-FROM Sailors s, Reserves r, Boats b
-WHERE s.sid = r.sid AND r.bid = b.bid AND b.color = 'red'
-UNION
-SELECT s.sname
-FROM Sailors s, Reserves r, Boats b
-WHERE s.sid = r.sid AND r.bid = b.bid AND b.color = 'green';
+SELECT s.sname FROM Sailors s, Reserves r, Boats b WHERE s.sid = r.sid AND r.bid = b.bid AND b.color = 'red' UNION SELECT s.sname FROM Sailors s, Reserves r, Boats b WHERE s.sid = r.sid AND r.bid = b.bid AND b.color = 'green';
 
 _____________________________________________________
 7) Find sailors who reserved both red and green boats. (INTERSECT)
 
-SELECT s.sname
-FROM Sailors s, Reserves r1, Boats b1
-WHERE s.sid = r1.sid AND r1.bid = b1.bid AND b1.color = 'red'
-INTERSECT
-SELECT s.sname
-FROM Sailors s, Reserves r2, Boats b2
-WHERE s.sid = r2.sid AND r2.bid = b2.bid AND b2.color = 'green';
+SELECT s.sname FROM Sailors s, Reserves r1, Boats b1 WHERE s.sid = r1.sid AND r1.bid = b1.bid AND b1.color = 'red' INTERSECT SELECT s.sname FROM Sailors s, Reserves r2, Boats b2 WHERE s.sid = r2.sid AND r2.bid = b2.bid AND b2.color = 'green';
 
 _____________________________________________________
 8) Find sailors who reserved a red and a green boat. (UNION ALL)
 
-SELECT s.sname
-FROM Sailors s, Reserves r, Boats b
-WHERE s.sid = r.sid AND r.bid = b.bid AND b.color = 'red'
-UNION ALL
-SELECT s.sname
-FROM Sailors s, Reserves r, Boats b
-WHERE s.sid = r.sid AND r.bid = b.bid AND b.color = 'green';
+SELECT s.sname FROM Sailors s, Reserves r, Boats b WHERE s.sid = r.sid AND r.bid = b.bid AND b.color = 'red' UNION ALL SELECT s.sname FROM Sailors s, Reserves r, Boats b WHERE s.sid = r.sid AND r.bid = b.bid AND b.color = 'green';
