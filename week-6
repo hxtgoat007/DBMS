@@ -1,0 +1,43 @@
+1) Find the average age of sailors with a rating of 10
+
+SELECT AVG(age) AS average_age FROM Sailors WHERE rating = 10;
+
+__________________________________
+2) Find the name and age of the oldest sailor
+
+SELECT sname, age FROM Sailors WHERE age = (SELECT MAX(age) FROM Sailors);
+
+__________________________________
+3) Count the number of different sailor names
+
+SELECT COUNT(DISTINCT sname) AS total_names FROM Sailors;
+
+__________________________________
+4) Find the age of the youngest sailor for each rating
+
+SELECT rating, MIN(age) AS min_age FROM Sailors GROUP BY rating;
+
+__________________________________
+5) Find the sum of ages of sailors whose rating is above 9
+
+SELECT SUM(age) AS sum_age FROM Sailors WHERE rating > 9;
+
+__________________________________
+6) Find the average age of sailors for each rating that has at least two sailors (GROUP BY + HAVING)
+
+SELECT rating, AVG(age) AS average_age FROM Sailors GROUP BY rating HAVING COUNT(*) >= 2;
+
+__________________________________
+7) Create a view of sailors whose rating is greater than 7
+
+CREATE VIEW v11 AS SELECT sid, age FROM Sailors WHERE rating > 7;
+
+__________________________________
+8) Display data from the created view
+
+SELECT * FROM v11;
+
+__________________________________
+9) Drop the created view
+
+DROP VIEW v11;
